@@ -1,0 +1,68 @@
+#move_after {
+	height: 100%;
+	min-height: 100%;
+}
+
+html {
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+body {
+	margin: 0;
+}
+
+img {
+	width: 30;
+	height: 30;
+}
+
+h2,
+.controls {
+	text-align: center;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+	color: #000;
+}
+
+form {
+	margin: 20px 0;
+}
+
+form input,
+button {
+	padding: 5px;
+}
+
+table {
+	width: 100%;
+	margin-bottom: 20px;
+	border-collapse: collapse;
+}
+
+.result {
+	-webkit-transition: .6s ease;
+	-moz-transition: .6s ease;
+	-ms-transition: .6s ease;
+	-o-transition: .6s ease;
+}
+
+.result:hover {
+	background-color: #ffff99;
+}
+
+table,
+th,
+td {
+	border: 1px solid #cdcdcd;
+}
+
+table th,
+table td {
+	padding: 10px;
+	text-align: left;
+}
