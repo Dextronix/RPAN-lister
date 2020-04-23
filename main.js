@@ -65,7 +65,6 @@ function parseStreams() {
                 listStreams();
             } else {
                 $("table tbody").append("An error occured, try again");
-               // ERROR
             }
         })
 }
@@ -88,7 +87,7 @@ function listStreams(sort = 'none', isAsc = true) {
     $("#tableFLIP").empty();
 
     $.each(obj, function(index, item) {
-        var markup = `<tr class="result" ><td><a target="_blank" title="open stream" onclick="openTab('${item.link}')">${item.title.TrimToLen(50)}</a></td><td>r/${item.subreddit}</td><td><a target="_blank" title="open userpage" onclick="openTab('https://reddit.com/u/${item.username}')">u/${item.username}</a></td><td>${item.upvotes}</td><td>${item.downvotes}</td><td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
+        var markup = `<tr class="result" ><td>${index+1}</td><td><a target="_blank" title="open stream" onclick="openTab('${item.link}')">${item.title.TrimToLen(50)}</a></td><td>r/${item.subreddit}</td><td><a target="_blank" title="open userpage" onclick="openTab('https://reddit.com/u/${item.username}')">u/${item.username}</a></td><td>${item.upvotes}</td><td>${item.downvotes}</td><td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
 
         $("table tbody").append(markup);
     });

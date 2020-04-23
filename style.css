@@ -44,3 +44,24 @@ th {
 td {
 		border: 1px solid #CCC; 
 }
+
+/* CSS for sorting */
+
+table, td, th {
+   /*  border: 1px solid black; */
+    border-collapse: collapsed;
+    /* padding: 2px 5px; */
+}
+thead th {
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+thead th.up {
+    padding-right: 20px;
+    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+}
+thead th.down {
+    padding-right: 20px;
+    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+}
+
