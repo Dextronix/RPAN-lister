@@ -8,7 +8,7 @@ var sort = "";
 var isAsc = false;
 var sortindex = -1;
 
-$("tr th").click(function() {
+$("tr th").dblclick(function() {
     if (($(this).attr("sortby") == sort) && (sortindex < 2)) {
         sortindex++;
         sort = $(this).attr("sortby");
