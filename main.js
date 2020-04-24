@@ -4,6 +4,40 @@ String.prototype.TrimToLen = function(length) {
     return this.length > length ? this.substring(0, length) + "..." : this;
 }
 
+var sort = "";
+var isAsc = false;
+var sortindex = -1;
+
+$("tr th").click(function() {
+    if (($(this).attr("sortby") == sort) && (sortindex < 2)) {
+        sortindex++;
+        sort = $(this).attr("sortby");
+    } else {
+        sortindex = 0;
+        sort = $(this).attr("sortby");
+    }
+
+    $("tr th").each(function() {
+        $(this).removeClass();
+    });
+
+    switch (sortindex) {
+        case 0:
+            $(this).addClass("down");
+			isAsc = true;
+            break;
+        case 1:
+            $(this).addClass("up");
+			isAsc = false;
+            break;
+		default: 
+			sort = "";
+			break;
+    }
+	
+	refreshData();
+});
+
 $(document).keyup(function(e) {
     if (e.keyCode === 13) alert("Coded by StoneIncarnate!"); // enter
     if (e.keyCode === 27) refreshData(); // esc
@@ -48,6 +82,8 @@ function parseStreams() {
                     let downvotes = item.downvotes;
                     let timeon = item.broadcast_time;
                     let timeleft = item.estimated_remaining_time;
+                    let contviews = item.continuous_watchers;
+                    let tempviews = item.unique_watchers;
 
                     streams.push({
                         "link": streamlink,
@@ -57,12 +93,19 @@ function parseStreams() {
                         "upvotes": upvotes,
                         "downvotes": downvotes,
                         "timeon": timeon,
-                        "timeleft": timeleft
+                        "timeleft": timeleft,
+                        "contviews": contviews,
+                        "tempviews": tempviews
                     });
 
-                });
-                //listStreams("timeon", true);
-                listStreams();
+                });			
+	
+				if (sort !== "") {
+					listStreams(sort, isAsc);
+				} else {
+					listStreams();
+				}
+						
             } else {
                 $("table tbody").append("An error occured, try again");
             }
@@ -87,11 +130,72 @@ function listStreams(sort = 'none', isAsc = true) {
     $("#tableFLIP").empty();
 
     $.each(obj, function(index, item) {
-        var markup = `<tr class="result" ><td>${index+1}</td><td><a target="_blank" title="open stream" onclick="openTab('${item.link}')">${item.title.TrimToLen(50)}</a></td><td>r/${item.subreddit}</td><td><a target="_blank" title="open userpage" onclick="openTab('https://reddit.com/u/${item.username}')">u/${item.username}</a></td><td>${item.upvotes}</td><td>${item.downvotes}</td><td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
+        var markup = `<tr class="result" ><td>${index+1}</td><td data_value="streamIDhere" data_menu="stream"><a title="${item.title}"  onclick="openTab('${item.link}');">${item.title.TrimToLen(50)}</a></td><td data_value ="${item.subreddit}" data_menu="sub">r/${item.subreddit}</td><td data_value = "${item.username}" data_menu="user"><a onclick="openTab('https://www.reddit.com/user/${item.username}');">u/${item.username}</a></td><td>${item.contviews}</td><td>${item.upvotes}</td><td>${item.downvotes}</td><td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
 
         $("table tbody").append(markup);
     });
 
+/*   
+	
+	This code will go live next update! 
+
+  $("tr td").bind("contextmenu", function(event) {
+        event.preventDefault();
+        var data = $(this).attr("data_value");
+
+        switch ($(this).attr("data_menu")) {
+
+            case "stream":
+                $(".custom-menu").html('<li data-action="stream_ID">Copy streamID</li>');
+                break;
+
+            case "user":
+                $(".custom-menu").html('<li data-action="user_hlt">Highlight user</li><li data-action="user_hide">Hide user</li>');
+                break;
+
+            case "sub":
+                $(".custom-menu").html('<li data-action="sub_hlt">Highlight sub</li><li data-action="sub_hide">Hide sub</li>');
+                break;
+
+            default:
+                $(".custom-menu").html('');
+        }
+
+        $(".custom-menu").finish().toggle(100).
+        css({
+            top: event.pageY + "px",
+            left: event.pageX + "px"
+        });
+
+        $(document).bind("mousedown", function(e) {
+            if (!$(e.target).parents(".custom-menu").length > 0) {
+                $(".custom-menu").hide(100);
+            }
+        });
+
+        $(".custom-menu li").click(function() {
+            switch ($(this).attr("data-action")) {
+                case "stream_ID":
+                    alert("Copied strean ID: " + data);
+                    break;
+                case "user_hide":
+                    alert("Hiding user " + data);
+                    break;
+                case "user_hlt":
+                    alert("Hightling user " + data);
+                    break;
+                case "sub_hlt":
+                    alert("Hightling sub " + data);
+                    break;
+                case "sub_hide":
+                    alert("Hiding sub " + data);
+                    break;
+            }
+            $(".custom-menu").hide(100);
+        });
+
+    }); */
+
 }
 
-parseStreams()
+parseStreams();

@@ -1,8 +1,7 @@
 <html><head><meta charset="utf-8">
-
    <title>RPAN STREAM VIEWER</title>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>  
       <link rel="stylesheet" type="text/css" href="style.css">
       <script src="main.js" defer='defer'></script>
    </head>
@@ -14,19 +13,22 @@
          <thead>
             <tr>		
 			<th>#</th>
-               <th name="title"><a>Stream</a></th>
-			   <th name="subreddit"><a>Subreddit</a></th>	
-			   <th name="username"><a>Username</a></th>			   
-			   <th name="upvotes"><a>Upvotes</a></th>
-			   <th name="downvotes"><a>Downvotes</a></th>
-			   <th name="timeon"><a>On for</a></th>
-               <th name="timeleft"><a>Time Left</a></th>
+               <th sortby="title"><a>Stream</a></th>
+			   <th sortby="subreddit"><a>Subreddit</a></th>	
+			   <th sortby="username"><a>Username</a></th>	
+			   <th sortby="contviews"><a>Views</a></th>				   
+			   <th sortby="upvotes"><a>Upvotes</a></th>
+			   <th sortby="downvotes"><a>Downvotes</a></th>
+			   <th sortby="timeon"><a>On for</a></th>
+               <th sortby="timeleft"><a>Time Left</a></th>
             </tr>
          </thead>
          <tbody id="tableFLIP"></tbody>
       </table><br>  
    </div>
    </div>
+   
+   <ul class='custom-menu'></ul>
    
 </body>
 </html>
