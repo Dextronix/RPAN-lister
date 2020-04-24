@@ -87,9 +87,9 @@ function parseStreams() {
 
                     streams.push({
                         "link": streamlink,
-                        "title": title,
-                        "subreddit": subreddit,
-                        "username": username,
+                        "title": title.toLowerCase(),
+                        "subreddit": subreddit.toLowerCase(),
+                        "username": username.toLowerCase(),
                         "upvotes": upvotes,
                         "downvotes": downvotes,
                         "timeon": timeon,
