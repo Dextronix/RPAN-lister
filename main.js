@@ -5,11 +5,25 @@ String.prototype.TrimToLen = function (length) {
     return this.length > length ? this.substring(0, length) + "..." : this;
 }
 
-var sort = "";
-var isAsc = false;
+var sort = "" || barn.get('sort_sort');
+var isAsc = false || barn.get('sort_isAsc');
 var sortindex = -1;
+var Elemindex = 0 || barn.get('sort_Elemindex');
+
+if (sort !== "" && Elemindex > 0){
+	let elm = $("tr th");
+	switch (isAsc) {
+    case true:
+        elm.eq(Elemindex).addClass("down");
+        break;
+    case false:
+        elm.eq(Elemindex).addClass("up");
+        break;
+    }
+}
 
 $("tr th").dblclick(function () {
+
     if (($(this).attr("sortby") == sort) && (sortindex < 2)) {
         sortindex++;
         sort = $(this).attr("sortby");
@@ -36,10 +50,14 @@ $("tr th").dblclick(function () {
         break;
     }
 
+	barn.set('sort_Elemindex', $(this).index()); // Remember the index of clicked item
+	barn.set('sort_isAsc', isAsc); // isAsc is the binary value for up / down arrow
+	barn.set('sort_sort', sort); // sort sort sort value for sorting the sort
+	
     refreshData();
 });
 
-$(document).keyup(function (e) {
+$(document).keydown(function (e) {
     if (e.keyCode === 13) alert("Coded by StoneIncarnate!"); // enter
     if (e.keyCode === 27) refreshData(); // esc
 });
@@ -165,9 +183,9 @@ function listStreams(sort = 'none', isAsc = true) {
             $(".custom-menu").html('<li data-action="user_unhlt">Unhighlight user</li>');
             break;
 
-            /* case "sub":
+             case "sub":
                 $(".custom-menu").html('<li data-action="sub_hlt">Highlight sub</li><li data-action="sub_hide">Hide sub</li>');
-                break; */
+                break; 
 
         default:
             $(".custom-menu").html('');
@@ -200,13 +218,13 @@ function listStreams(sort = 'none', isAsc = true) {
                 break;
             case "user_hide":
                 alert("Hiding user " + data);
-                break; 
+                break; */
             case "sub_hlt":
                 alert("Hightling sub " + data);
                 break;
             case "sub_hide":
                 alert("Hiding sub " + data);
-                break; */
+                break; 
             }
             $(".custom-menu").hide(100);
         });
