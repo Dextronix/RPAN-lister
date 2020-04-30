@@ -60,10 +60,10 @@ $("tr th").dblclick(function () {
     refreshData();
 });
 
-$(document).keydown(function (e) {
+window.addEventListener('keydown', function (e) {
     if (e.keyCode === 13) alert("Coded by StoneIncarnate!"); // enter
     if (e.keyCode === 27) refreshData(); // esc	
-	if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) console.log(`DEBUG VALUES:\nHighlighted users: ${barn.smembers('highlitUsers')}\nHidden users: ${(barn.smembers('hiddenUsers') || "none")}\nSort: ${barn.get('sort_sort')}\nisAsc: ${barn.get('sort_isAsc')}\nElemindex: ${barn.get('sort_Elemindex')}`);		   
+	if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) console.log(`DEBUG VALUES:\nHighlighted users: ${barn.smembers('highlitUsers')}\nHidden users: ${(barn.smembers('hiddenUsers') || "none")}\nSort: ${barn.get('sort_sort')}\nisAsc: ${barn.get('sort_isAsc')}\nElemindex: ${barn.get('sort_Elemindex')}`);	
 });
 
 function openTab(src) {
