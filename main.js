@@ -1,5 +1,6 @@
 var streams = [];
 var barn = new Barn(localStorage);
+barn.condense();
 
 String.prototype.TrimToLen = function (length) {
     return this.length > length ? this.substring(0, length) + "..." : this;
@@ -15,9 +16,11 @@ if (sort !== "" && Elemindex > 0){
 	switch (isAsc) {
     case true:
         elm.eq(Elemindex).addClass("down");
+		sortindex = 0;
         break;
     case false:
         elm.eq(Elemindex).addClass("up");
+		sortindex = 1;
         break;
     }
 }
@@ -59,7 +62,8 @@ $("tr th").dblclick(function () {
 
 $(document).keydown(function (e) {
     if (e.keyCode === 13) alert("Coded by StoneIncarnate!"); // enter
-    if (e.keyCode === 27) refreshData(); // esc
+    if (e.keyCode === 27) refreshData(); // esc	
+	if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) console.log(`DEBUG VALUES:\nHighlighted users: ${barn.smembers('highlitUsers')}\nHidden users: ${(barn.smembers('hiddenUsers') || "none")}\nSort: ${barn.get('sort_sort')}\nisAsc: ${barn.get('sort_isAsc')}\nElemindex: ${barn.get('sort_Elemindex')}`);		   
 });
 
 function openTab(src) {
@@ -86,6 +90,8 @@ function refreshData() {
 
 function parseStreams() {
 
+    $("table tbody").append("Loading stream data...");
+	
     let UserHL = barn.smembers('highlitUsers') || [];
 
     /* Instead of processing the entire object, I first pull out the most important parts */
