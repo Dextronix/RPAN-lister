@@ -189,9 +189,9 @@ function listStreams(sort = 'none', isAsc = true) {
             $(".custom-menu").html('<li data-action="user_unhlt">Unhighlight user</li>');
             break;
 
-             case "sub":
+            /*  case "sub":
                 $(".custom-menu").html('<li data-action="sub_hlt">Highlight sub</li><li data-action="sub_hide">Hide sub</li>');
-                break; 
+                break; */ 
 
         default:
             $(".custom-menu").html('');
