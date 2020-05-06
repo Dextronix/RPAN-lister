@@ -224,13 +224,13 @@ function listStreams(sort = 'none', isAsc = true) {
                 break;
             case "user_hide":
                 alert("Hiding user " + data);
-                break; */
+                break; 
             case "sub_hlt":
                 alert("Hightling sub " + data);
                 break;
             case "sub_hide":
                 alert("Hiding sub " + data);
-                break; 
+                break; */
             }
             $(".custom-menu").hide(100);
         });
