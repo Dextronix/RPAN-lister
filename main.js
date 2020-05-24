@@ -95,51 +95,53 @@ function refreshData() {
 }
 
 function parseStreams() {
+    $("#tableFLIP").empty();
     $("table tbody").append("Loading stream data...");
 
     let UserHL = barn.smembers('highlitUsers') || [];
 
-    $.getJSON("https://strapi.reddit.com/broadcasts", function (json) {
+    $.getJSON('https://strapi.reddit.com/broadcasts').done(function (json) {
         $("#tableFLIP").empty();
-        if (json.status == "success") {
-            $.each(json.data, function (index, item) {
-                let sugar = item.post; // JavaScript Diabetes				
-                let streamlink = sugar.url;
-                let title = sugar.title;
-                let subreddit = sugar.subreddit.name;
-                let username = sugar.authorInfo.name;
-                let upvotes = item.upvotes;
-                let downvotes = item.downvotes;
-                let timeon = item.broadcast_time;
-                let timeleft = item.estimated_remaining_time;
-                let contviews = item.continuous_watchers;
-                let tempviews = item.unique_watchers;
+        $.each(json.data, function (index, item) {
+            let sugar = item.post; // JavaScript Diabetes				
+            let streamlink = sugar.url;
+            let title = sugar.title;
+            let subreddit = sugar.subreddit.name;
+            let username = sugar.authorInfo.name;
+            let upvotes = item.upvotes;
+            let downvotes = item.downvotes;
+            let timeon = item.broadcast_time;
+            let timeleft = item.estimated_remaining_time;
+            let contviews = item.continuous_watchers;
+            let tempviews = item.unique_watchers;
 
-                streams.push({
-                    "link": streamlink,
-                    "title": title.toLowerCase(),
-                    "subreddit": subreddit.toLowerCase(),
-                    "username": username.toLowerCase(),
-                    "upvotes": upvotes,
-                    "downvotes": downvotes,
-                    "timeon": timeon,
-                    "timeleft": timeleft,
-                    "contviews": contviews,
-                    "tempviews": tempviews,
-                    "highlight": UserHL.includes(username.toLowerCase())
-                });
-
+            streams.push({
+                "link": streamlink,
+                "title": title.toLowerCase(),
+                "subreddit": subreddit.toLowerCase(),
+                "username": username.toLowerCase(),
+                "upvotes": upvotes,
+                "downvotes": downvotes,
+                "timeon": timeon,
+                "timeleft": timeleft,
+                "contviews": contviews,
+                "tempviews": tempviews,
+                "highlight": UserHL.includes(username.toLowerCase())
             });
 
-            if (sort !== "") {
-                listStreams(sort, isAsc);
-            } else {
-                listStreams();
-            }
+        });
 
+        if (sort !== "") {
+            listStreams(sort, isAsc);
         } else {
-            $("table tbody").append("An error occured, try again");
+            listStreams();
         }
+    }).fail(function (jqxhr) {
+        $("#tableFLIP").empty();
+        $("table tbody").append(`  Error ${jqxhr.status} Refreshing...`);
+        _.delay(function () {
+            refreshData()
+        }, 500, 'later');
     });
 }
 
