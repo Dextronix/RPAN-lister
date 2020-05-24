@@ -2,6 +2,12 @@ var streams = [];
 var barn = new Barn(localStorage);
 barn.condense();
 
+$(document).ready(function () {
+    $.ajaxSetup({
+        cache: false
+    });
+});
+
 String.prototype.TrimToLen = function (length) {
     return this.length > length ? this.substring(0, length) + "..." : this;
 }
@@ -11,16 +17,16 @@ var isAsc = false || barn.get('sort_isAsc');
 var sortindex = -1;
 var Elemindex = 0 || barn.get('sort_Elemindex');
 
-if (sort !== "" && Elemindex > 0){
-	let elm = $("tr th");
-	switch (isAsc) {
+if (sort !== "" && Elemindex > 0) {
+    let elm = $("tr th");
+    switch (isAsc) {
     case true:
         elm.eq(Elemindex).addClass("down");
-		sortindex = 0;
+        sortindex = 0;
         break;
     case false:
         elm.eq(Elemindex).addClass("up");
-		sortindex = 1;
+        sortindex = 1;
         break;
     }
 }
@@ -53,17 +59,17 @@ $("tr th").dblclick(function () {
         break;
     }
 
-	barn.set('sort_Elemindex', $(this).index()); // Remember the index of clicked item
-	barn.set('sort_isAsc', isAsc); // isAsc is the binary value for up / down arrow
-	barn.set('sort_sort', sort); // sort sort sort value for sorting the sort
-	
+    barn.set('sort_Elemindex', $(this).index()); // Remember the index of clicked item
+    barn.set('sort_isAsc', isAsc); // isAsc is the binary value for up / down arrow
+    barn.set('sort_sort', sort); // sort sort sort value for sorting the sort
+
     refreshData();
 });
 
 window.addEventListener('keydown', function (e) {
     if (e.keyCode === 13) alert("Coded by StoneIncarnate!"); // enter
     if (e.keyCode === 27) refreshData(); // esc	
-	if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) console.log(`DEBUG VALUES:\nHighlighted users: ${barn.smembers('highlitUsers')}\nHidden users: ${(barn.smembers('hiddenUsers') || "none")}\nSort: ${barn.get('sort_sort')}\nisAsc: ${barn.get('sort_isAsc')}\nElemindex: ${barn.get('sort_Elemindex')}`);	
+    if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) console.log(`DEBUG VALUES:\nHighlighted users: ${barn.smembers('highlitUsers')}\nHidden users: ${(barn.smembers('hiddenUsers') || "none")}\nSort: ${barn.get('sort_sort')}\nisAsc: ${barn.get('sort_isAsc')}\nElemindex: ${barn.get('sort_Elemindex')}`);
 });
 
 function openTab(src) {
@@ -89,56 +95,52 @@ function refreshData() {
 }
 
 function parseStreams() {
-
     $("table tbody").append("Loading stream data...");
-	
+
     let UserHL = barn.smembers('highlitUsers') || [];
 
-    /* Instead of processing the entire object, I first pull out the most important parts */
-    fetch('https://strapi.reddit.com/broadcasts')
-        .then(data => data.json())
-        .then(json => {
-            $("#tableFLIP").empty();
-            if (json.status == "success") {
-                $.each(json.data, function (index, item) {
-                    let sugar = item.post; // JavaScript Diabetes				
-                    let streamlink = sugar.url;
-                    let title = sugar.title;
-                    let subreddit = sugar.subreddit.name;
-                    let username = sugar.authorInfo.name;
-                    let upvotes = item.upvotes;
-                    let downvotes = item.downvotes;
-                    let timeon = item.broadcast_time;
-                    let timeleft = item.estimated_remaining_time;
-                    let contviews = item.continuous_watchers;
-                    let tempviews = item.unique_watchers;
+    $.getJSON("https://strapi.reddit.com/broadcasts", function (json) {
+        $("#tableFLIP").empty();
+        if (json.status == "success") {
+            $.each(json.data, function (index, item) {
+                let sugar = item.post; // JavaScript Diabetes				
+                let streamlink = sugar.url;
+                let title = sugar.title;
+                let subreddit = sugar.subreddit.name;
+                let username = sugar.authorInfo.name;
+                let upvotes = item.upvotes;
+                let downvotes = item.downvotes;
+                let timeon = item.broadcast_time;
+                let timeleft = item.estimated_remaining_time;
+                let contviews = item.continuous_watchers;
+                let tempviews = item.unique_watchers;
 
-                    streams.push({
-                        "link": streamlink,
-                        "title": title.toLowerCase(),
-                        "subreddit": subreddit.toLowerCase(),
-                        "username": username.toLowerCase(),
-                        "upvotes": upvotes,
-                        "downvotes": downvotes,
-                        "timeon": timeon,
-                        "timeleft": timeleft,
-                        "contviews": contviews,
-                        "tempviews": tempviews,
-                        "highlight": UserHL.includes(username.toLowerCase())
-                    });
-
+                streams.push({
+                    "link": streamlink,
+                    "title": title.toLowerCase(),
+                    "subreddit": subreddit.toLowerCase(),
+                    "username": username.toLowerCase(),
+                    "upvotes": upvotes,
+                    "downvotes": downvotes,
+                    "timeon": timeon,
+                    "timeleft": timeleft,
+                    "contviews": contviews,
+                    "tempviews": tempviews,
+                    "highlight": UserHL.includes(username.toLowerCase())
                 });
 
-                if (sort !== "") {
-                    listStreams(sort, isAsc);
-                } else {
-                    listStreams();
-                }
+            });
 
+            if (sort !== "") {
+                listStreams(sort, isAsc);
             } else {
-                $("table tbody").append("An error occured, try again");
+                listStreams();
             }
-        })
+
+        } else {
+            $("table tbody").append("An error occured, try again");
+        }
+    });
 }
 
 function listStreams(sort = 'none', isAsc = true) {
@@ -176,14 +178,14 @@ function listStreams(sort = 'none', isAsc = true) {
 
         switch ($(this).attr("data_menu")) {
 
-       /*  case "stream":
-            $(".custom-menu").html('<li data-action="stream_ID">Copy streamID</li>');
-            break; */
-		/* <li data-action="user_hide">Hide user</li> */
+            /*  case "stream":
+                 $(".custom-menu").html('<li data-action="stream_ID">Copy streamID</li>');
+                 break; */
+            /* <li data-action="user_hide">Hide user</li> */
 
         case "user":
             $(".custom-menu").html('<li data-action="user_hlt">Highlight user</li>');
-            break; 
+            break;
 
         case "user2":
             $(".custom-menu").html('<li data-action="user_unhlt">Unhighlight user</li>');
@@ -191,7 +193,7 @@ function listStreams(sort = 'none', isAsc = true) {
 
             /*  case "sub":
                 $(".custom-menu").html('<li data-action="sub_hlt">Highlight sub</li><li data-action="sub_hide">Hide sub</li>');
-                break; */ 
+                break; */
 
         default:
             $(".custom-menu").html('');
@@ -219,18 +221,18 @@ function listStreams(sort = 'none', isAsc = true) {
                 barn.srem('highlitUsers', data);
                 refreshData(); //soft refresh
                 break;
-          /*case "stream_ID":
-                alert("Copied stream ID: " + data);
-                break;
-            case "user_hide":
-                alert("Hiding user " + data);
-                break; 
-            case "sub_hlt":
-                alert("Hightling sub " + data);
-                break;
-            case "sub_hide":
-                alert("Hiding sub " + data);
-                break; */
+                /*case "stream_ID":
+                      alert("Copied stream ID: " + data);
+                      break;
+                  case "user_hide":
+                      alert("Hiding user " + data);
+                      break; 
+                  case "sub_hlt":
+                      alert("Hightling sub " + data);
+                      break;
+                  case "sub_hide":
+                      alert("Hiding sub " + data);
+                      break; */
             }
             $(".custom-menu").hide(100);
         });
