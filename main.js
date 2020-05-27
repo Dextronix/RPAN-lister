@@ -104,16 +104,16 @@ function parseStreams() {
         $("#tableFLIP").empty();
         $.each(json.data, function (index, item) {
             let sugar = item.post; // JavaScript Diabetes				
-            let streamlink = sugar.url;
-            let title = sugar.title;
-            let subreddit = sugar.subreddit.name;
-            let username = sugar.authorInfo.name;
-            let upvotes = item.upvotes;
-            let downvotes = item.downvotes;
-            let timeon = item.broadcast_time;
-            let timeleft = item.estimated_remaining_time;
-            let contviews = item.continuous_watchers;
-            let tempviews = item.unique_watchers;
+            let streamlink = sugar.url || "error";
+            let title = sugar.title || "error";
+            let subreddit = sugar.subreddit.name || "error";
+            let username = sugar.authorInfo.name || "error";
+            let upvotes = item.upvotes || "0";
+            let downvotes = item.downvotes || "0";
+            let timeon = item.broadcast_time || "0";
+            let timeleft = item.estimated_remaining_time || "0";
+            let contviews = item.continuous_watchers || "0";
+            let tempviews = item.unique_watchers || "0";
 
             streams.push({
                 "link": streamlink,
