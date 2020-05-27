@@ -114,8 +114,10 @@ function parseStreams() {
             let timeleft = item.estimated_remaining_time || "0";
             let contviews = item.continuous_watchers || "0";
             let tempviews = item.unique_watchers || "0";
+			let state = item.stream.state || "ENDED";
 
             streams.push({
+				"state": state,
                 "link": streamlink,
                 "title": title.toLowerCase(),
                 "subreddit": subreddit.toLowerCase(),
@@ -125,7 +127,7 @@ function parseStreams() {
                 "timeon": timeon,
                 "timeleft": timeleft,
                 "contviews": contviews,
-                "tempviews": tempviews,
+                /* "tempviews": tempviews, */
                 "highlight": UserHL.includes(username.toLowerCase())
             });
 
@@ -151,7 +153,8 @@ function listStreams(sort = 'none', isAsc = true) {
     var order;
 
     /* let highlight = _.filter(streams, ["highlight", true]);  */
-    let refined = _.reject(streams, data => _.includes(barn.smembers('hiddenUsers'), data.username)); /* highlit and hidden are removed */
+	let onlylive = _.filter(streams, data => _.includes("IS_LIVE", data.state));
+    let refined = _.reject(onlylive, data => _.includes(barn.smembers('hiddenUsers'), data.username)); /* highlit and hidden are removed */
 
     /* feed sorting function "asc" and "desc" */
     order = 1 == isAsc ? "asc" : "desc";
