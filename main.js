@@ -139,11 +139,18 @@ function parseStreams() {
             listStreams();
         }
     }).fail(function (jqxhr) {
-        $("#tableFLIP").empty();
-        $("table tbody").append(`  Error ${jqxhr.status} Refreshing...`);
-        _.delay(function () {
-            refreshData()
-        }, 500, 'later');
+         if (jqxhr.status == 200) {
+            alert("The RPAN server appears to have been blocked by something!\nYou may need to whitelist the RPAN stream API for this site!");
+        } else if (jqxhr.status == 500) {
+            $("#tableFLIP").empty();
+            $("table tbody").append(`  Error ${jqxhr.status} Refreshing...`);
+            _.delay(function() {
+                refreshData()
+            }, 500, 'later');
+        } else {
+            $("#tableFLIP").empty();
+            $("table tbody").append(`Error ${jqxhr.status}`);
+        }
     });
 }
 
