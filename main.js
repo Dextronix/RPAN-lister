@@ -12,10 +12,13 @@ String.prototype.TrimToLen = function (length) {
     return this.length > length ? this.substring(0, length) + "..." : this;
 }
 
+var BSmode = false || barn.get('setting_BSmode');
 var sort = "" || barn.get('sort_sort');
 var isAsc = false || barn.get('sort_isAsc');
 var sortindex = -1;
 var Elemindex = 0 || barn.get('sort_Elemindex');
+
+BSmode&&$("#resulttable thead tr").html("<th>#</th><th sortby=\"title\"><a>Stream</a></th><th sortby=\"subreddit\"><a>Subreddit</a></th><th sortby=\"username\"><a>Username</a></th>\t<th sortby=\"contviews\"><a>Viewers</a></th><th sortby=\"upvotes\"><a>Upvotes</a></th><th sortby=\"downvotes\"><a>Downvotes</a></th><th sortby=\"comments\"><a>Comments</a></th><th sortby=\"timeon\"><a>On for</a></th><th sortby=\"timeleft\"><a>Time Left</a></th></tr>");
 
 if (sort !== "" && Elemindex > 0) {
     let elm = $("tr th");
@@ -69,6 +72,9 @@ $("tr th").dblclick(function () {
 window.addEventListener('keydown', function (e) {
     if (e.keyCode === 13) alert("Coded by StoneIncarnate!"); // enter
     if (e.keyCode === 27) refreshData(); // esc	
+	if ((e.ctrlKey || e.metaKey) && e.keyCode == 85){ // enable disable BSmode (ctrl u)
+		BSmode=!BSmode,barn.set("setting_BSmode",BSmode),BSmode?(alert("BSmode activated\nRefreshing..."),location.reload()):(alert("BSmode deactivated\nRefreshing..."),barn.set('sort_sort', ""),location.reload());
+	}
     if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) console.log(`DEBUG VALUES:\nHighlighted users: ${barn.smembers('highlitUsers')}\nHidden users: ${(barn.smembers('hiddenUsers') || "none")}\nSort: ${barn.get('sort_sort')}\nisAsc: ${barn.get('sort_isAsc')}\nElemindex: ${barn.get('sort_Elemindex')}`);
 });
 
@@ -106,8 +112,9 @@ function parseStreams() {
 
     $.getJSON('https://strapi.reddit.com/broadcasts').done(function (json) {
         $("#tableFLIP").empty();
-        $.each(json.data, function (index, item) {
-            let sugar = item.post; // JavaScript Diabetes				
+        $.each(json.data, function (index, item) {	
+            let sugar = item.post; // JavaScript Diabetes	
+			let comments = sugar.commentCount || "0";			
             let streamlink = sugar.url || "error";
             let title = sugar.title || "error";
             let subreddit = sugar.subreddit.name || "error";
@@ -121,6 +128,7 @@ function parseStreams() {
 			let state = item.stream.state || "ENDED";
 
             streams.push({
+				"comments": comments,
 				"state": state,
                 "link": streamlink,
                 "title": title.toLowerCase(),
@@ -182,8 +190,15 @@ function listStreams(sort = 'none', isAsc = true) {
     $("#tableFLIP").empty();
 
     $.each(obj, function (index, item) {
-
-        var markup = `<tr class="result" ${item.highlight?'style="background: lightyellow"':""}><td>${index+1}</td><td data_value="streamIDhere" data_menu="stream"><a title="${item.title}"  onclick="openTab('${item.link}');">${item.title.TrimToLen(50)}</a></td><td data_value ="${item.subreddit}" data_menu="sub">r/${item.subreddit}</td><td data_value = "${item.username}" data_menu="${item.highlight?"user2":"user"}"><a onclick="openTab('https://www.reddit.com/user/${item.username}');">u/${item.username}</a></td><td>${item.contviews}</td><td>${item.upvotes}</td><td>${item.downvotes}</td><td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
+			
+        var markup = "";
+		
+		if (BSmode) {	
+		markup = `<tr class="result" ${item.highlight?'style="background: lightyellow"':""}><td>${index+1}</td><td data_value="streamIDhere" data_menu="stream"><a title="${item.title}"  onclick="openTab('${item.link}');">${item.title.TrimToLen(50)}</a></td><td data_value ="${item.subreddit}" data_menu="sub">r/${item.subreddit}</td><td data_value = "${item.username}" data_menu="${item.highlight?"user2":"user"}"><a onclick="openTab('https://www.reddit.com/user/${item.username}');">u/${item.username}</a></td><td>${item.contviews}</td><td>${item.upvotes}</td><td>${item.downvotes}</td><td sortby="comments">${item.comments}</td><td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
+		}
+		else{
+		markup = `<tr class="result" ${item.highlight?'style="background: lightyellow"':""}><td>${index+1}</td><td data_value="streamIDhere" data_menu="stream"><a title="${item.title}"  onclick="openTab('${item.link}');">${item.title.TrimToLen(50)}</a></td><td data_value ="${item.subreddit}" data_menu="sub">r/${item.subreddit}</td><td data_value = "${item.username}" data_menu="${item.highlight?"user2":"user"}"><a onclick="openTab('https://www.reddit.com/user/${item.username}');">u/${item.username}</a></td><td>${item.contviews}</td><td>${item.upvotes}</td><td>${item.downvotes}</td><td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
+		}
 
         $("table tbody").append(markup);
     });
