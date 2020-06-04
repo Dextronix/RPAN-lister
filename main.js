@@ -70,13 +70,15 @@ $("tr th").dblclick(function () {
 });
 
 window.addEventListener('keydown', function (e) {
-    if (e.keyCode === 13) alert("Coded by StoneIncarnate!"); // enter
-    if (e.keyCode === 27) refreshData(); // esc	
-	if ((e.ctrlKey || e.metaKey) && e.keyCode == 81){ // enable disable BSmode (ctrl q)
+	if (e.key === "j"){
 		BSmode=!BSmode,barn.set("setting_BSmode",BSmode),BSmode?(alert("BSmode activated\nRefreshing..."),location.reload()):(alert("BSmode deactivated\nRefreshing..."),barn.set('sort_sort', ""),location.reload());
 	}
+    if (e.keyCode === 13) alert("Coded by StoneIncarnate!"); // enter
+    if (e.keyCode === 27) refreshData(); // esc	
     if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) console.log(`DEBUG VALUES:\nHighlighted users: ${barn.smembers('highlitUsers')}\nHidden users: ${(barn.smembers('hiddenUsers') || "none")}\nSort: ${barn.get('sort_sort')}\nisAsc: ${barn.get('sort_isAsc')}\nElemindex: ${barn.get('sort_Elemindex')}`);
+	
 });
+
 
 function openTab(src) {
     window.open(src, "_blank");
