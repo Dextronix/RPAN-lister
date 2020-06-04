@@ -63,7 +63,7 @@ $("tr th").dblclick(function () {
     barn.set('sort_isAsc', isAsc); // isAsc is the binary value for up / down arrow
     barn.set('sort_sort', sort); // sort sort sort value for sorting the sort
 
-    refreshData();
+    s_refreshData();
 });
 
 window.addEventListener('keydown', function (e) {
@@ -92,6 +92,10 @@ function formatTime(time) {
 function refreshData() {
     streams = [];
     parseStreams();
+}
+
+function s_refreshData() {
+    listStreams(sort, isAsc);
 }
 
 function parseStreams() {
@@ -227,11 +231,11 @@ function listStreams(sort = 'none', isAsc = true) {
             switch ($(this).attr("data-action")) {
             case "user_hlt":
                 barn.sadd('highlitUsers', data);
-                refreshData(); //soft refresh
+                s_refreshData(); //soft refresh
                 break;
             case "user_unhlt":
                 barn.srem('highlitUsers', data);
-                refreshData(); //soft refresh
+                s_refreshData(); //soft refresh
                 break;
                 /*case "stream_ID":
                       alert("Copied stream ID: " + data);
