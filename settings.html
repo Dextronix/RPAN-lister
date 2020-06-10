@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html><meta charset="utf-8">
+<head>
+<title>RPAN Lister: Settings</title>
+<link rel="icon" href="favicon.png">
+<meta charset="utf-8">
+<script src="libs/barn.min.js"></script>
+<!-- <script src="libs/lz-string.min.js"></script> -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/lodash.min.js"></script>
+<script src="js/settings.min.js" defer='defer'></script>
+<link rel="stylesheet" type="text/css" href="css/settings.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="tabs">User Management</div>
+<div class="tabs">
+  <button class="tabhead active">Highlit Users</button>
+  <button class="tabhead">Hidden Users</button>
+  <button class="tabhead">Hidden Subs</button>
+  <button class="tabhead">Trashcan</button>
+  <button onclick="goBack()" class="back">Go Back</button>
+</div>
+<div class=tabcontent>
+<div class="controls">
+<a action="move" style="text-align: right;">[Move to]</a>
+<a action="delete" style="text-align: right;">[Delete]</a>
+<a action="add" style="text-align: right;">[Add Item]</a>
+<div style="display: none;" class="boxcontainer"><br><input type="text" class="namebox"><input class="addbutton" type="button" value="Add"></div>
+</div>
+
+<div style="display: none;" class="trashcontrols">
+<a action="restore" style="text-align: right;">[Restore]</a>
+<a action="delete2" style="text-align: right;">[Delete forever]</a>
+</div>
+
+<hr class="midbar"/>
+<div class="listcontent">
+</div>
+</div>
+<div class="tabs">Misc Settings</div>
+<div class=tabcontent>
+<input type="checkbox" class="setting" value="" data-action="darkmode"><label>Dark Theme</label><br>
+<input type="checkbox" class="setting" value="" data-action="autorefresh"><label>Auto Refresh</label><br>
+<div style="display: none;" class="container">
+Every:
+<div  class="range-slider"></div>
+</div>
+</div>
+<ul class='custom-menu2'></ul>
+</body>
+</html> 

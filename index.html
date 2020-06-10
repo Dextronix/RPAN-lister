@@ -1,14 +1,14 @@
-<html><head><meta charset="utf-8">
+<!DOCTYPE html><html><head><meta charset="utf-8">
 
-   <title>RPAN STREAM VIEWER</title>
-      <script src="jquery.min.js"></script>
-      <script src="lodash.min.js"></script>
-	  <script src="barn.min.js"></script>
+   <title>RPAN Lister</title>
+      <script src="libs/jquery.min.js"></script>
+      <script src="libs/lodash.min.js"></script>
+	  <script src="libs/barn.min.js"></script>
 	  <meta content="A small tool that lists all the current streams on Reddit Public Access Network" property="og:description">
 	  <link rel="icon" href="favicon.png">
 	  
-      <link rel="stylesheet" type="text/css" href="styles/style.css">
-      <script src="main.js" defer='defer'></script>
+      <link rel="stylesheet" type="text/css" href="css/main.css">
+      <script src="js/main.min.js" defer='defer'></script>
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166723802-1"></script>
 	  <script>
        window.dataLayer = window.dataLayer || [];
@@ -24,11 +24,11 @@
       <table id="resulttable">
          <thead>
             <tr>		
-			<th>#</th>
+			<th><a>#</a></th>
                <th sortby="title"><a>Stream</a></th>
 			   <th sortby="subreddit"><a>Subreddit</a></th>	
 			   <th sortby="username"><a>Username</a></th>	
-			   <th sortby="contviews"><a>Views</a></th>				   
+			   <th sortby="contviews"><a>Viewers</a></th>				   
 			   <th sortby="upvotes"><a>Upvotes</a></th>
 			   <th sortby="downvotes"><a>Downvotes</a></th>
 			   <th sortby="timeon"><a>On for</a></th>
@@ -38,6 +38,8 @@
          <tbody id="tableFLIP"></tbody>
       </table><br>  
    </div>
+   <div class="centered"><a onclick="refreshData()" class="button1">Refresh</a>
+<a href="settings.html" class="button1">Settings</a></div>
    </div>
    
    <ul id="cust-menu"class='custom-menu'>
