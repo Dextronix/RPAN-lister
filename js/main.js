@@ -213,13 +213,10 @@ function listStreams(sort = 'none', isAsc = true) {
     $("#tableFLIP").empty();
 
     $.each(obj, function (index, item) {		
-        var markup = "";
-		if (BSmode) {	
-		markup = `<tr class="result${item.highlight?' marked"':""}"><td>${index+1}</td><td data_value="streamIDhere" data_menu="stream"><a title="${item.title}"  onclick="openTab('${item.link}');">${item.title.TrimToLen(50)}</a></td><td data_value ="${item.subreddit}" data_menu="sub">r/${item.subreddit}</td><td data_value = "${item.username}" data_menu="${item.highlight?"user2":"user"}"><a onclick="openTab('https://www.reddit.com/user/${item.username}');">u/${item.username}</a></td><td>${item.contviews}</td><td>${item.upvotes}</td><td>${item.downvotes}</td><td sortby="comments">${item.comments}</td><td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
-		}
-		else{
-		markup = `<tr class="result${item.highlight?' marked"':""}"><td>${index+1}</td><td data_value="" data_menu="stream"><a title="${item.title}"  onclick="openTab('${item.link}');">${item.title.TrimToLen(50)}</a></td><td data_value ="${item.subreddit}" data_menu="sub">r/${item.subreddit}</td><td data_value = "${item.username}" data_menu="${item.highlight?"user2":"user"}"><a onclick="openTab('https://www.reddit.com/user/${item.username}');">u/${item.username}</a></td><td>${item.contviews}</td><td>${item.upvotes}</td><td>${item.downvotes}</td><td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
-		}
+        var bsmodestr = BSmode?`<td>${item.comments}</td>`:'';
+
+		var markup = `<tr class="result${item.highlight?' marked"':""}"><td>${index+1}</td><td data_menu="stream"><a title="${item.title}"  onclick="openTab('${item.link}');">${item.title.TrimToLen(50)}</a></td><td data_value ="${item.subreddit}" data_menu="sub">r/${item.subreddit}</td><td data_value = "${item.username}" data_menu="${item.highlight?"user2":"user"}"><a onclick="openTab('https://www.reddit.com/user/${item.username}');">u/${item.username}</a></td><td>${item.contviews}</td><td>${item.upvotes}</td><td>${item.downvotes}</td>${bsmodestr}<td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
+
         $("table tbody").append(markup);
     });
 
