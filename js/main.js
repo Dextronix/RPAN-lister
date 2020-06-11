@@ -32,7 +32,7 @@ var isAsc = false || barn.get('sort_isAsc');
 var sortindex = -1;
 var Elemindex = 0 || barn.get('sort_Elemindex');
 
-BSmode&&$("#resulttable thead tr").html("<th>#</th><th sortby=\"title\"><a>Stream</a></th><th sortby=\"subreddit\"><a>Subreddit</a></th><th sortby=\"username\"><a>Username</a></th>\t<th sortby=\"contviews\"><a>Viewers</a></th><th sortby=\"upvotes\"><a>Upvotes</a></th><th sortby=\"downvotes\"><a>Downvotes</a></th><th sortby=\"comments\"><a>Comments</a></th><th sortby=\"timeon\"><a>On for</a></th><th sortby=\"timeleft\"><a>Time Left</a></th></tr>");
+BSmode&&$('#resulttable').find('thead tr th:nth-child(7)').after('<th sortby="comments"><a>Comments</a></th>');
 
 if (sort !== "" && Elemindex > 0) {
     let elm = $("tr th");
