@@ -28,17 +28,16 @@ $(".trashcontrols a").on("click", function() {
 $(document).ready(function() {
 	$(".addbutton").on("click", function() {
 		var name = $(".namebox").val();
-		var regexpassed = true;
-       if (name.length > 0 && name.length < 20 && regexpassed){
-		   // owo fix this
-		   barn.sadd(getlistStr(activeStack.activeList), name)
+       if (name.match(/^[0-9a-zA-Z-_]{3,21}$/)){
+		   barn.sadd(getlistStr(activeStack.activeList), name.toLowerCase())
 		   populateList(getList(activeStack.activeList));
 	   }
-	   else if (name.length > 20){
-		alert("Reddit user/sub names have a 20 character limit");   
+	   else if (name.length > 21){
+		alert("Reddit user/sub names have a 21 character limit");   
 	   }
 	   else{
-		 alert("Invalid user/sub name");  
+		 $(".namebox").val("");	 
+		 alert("Invalid user/sub name");      
 	   }
     });
 	
@@ -81,14 +80,22 @@ activeStack.activeList = 1;
 	}
 });
 
-
-/* function manageBackup(create = true){
+/* 
+function manageBackup(){
+ fetchkey = function (name){
+return barn.get(name) || "";
+}
+ fetchlist = function (name){
+return _.compact(barn.smembers(name)) || [];
+}	
+	
 var masterArray = {};
 
-masterArray = {"sort_sort":barn.get("sort_sort"),"sort_isAsc":barn.get("sort_isAsc"),"sort_Elemindex":barn.get("sort_Elemindex"),"setting_darkmode":barn.get("setting_darkmode"),"setting_BSmode":barn.get("setting_BSmode"),"setting_interval":barn.get("setting_interval"),"setting_refresh":barn.get("setting_refresh"),"setting_trash":barn.get("setting_trash"),"highlitUsers": barn.smembers("highlitUsers"),"hiddenUsers": barn.smembers("hiddenUsers"),"hiddenSubs": barn.smembers("hiddenSubs")};
+masterArray = {"sort_sort":fetchkey("sort_sort"),"sort_isAsc":fetchkey("sort_isAsc"),"sort_Elemindex":fetchkey("sort_Elemindex"),"setting_darkmode":fetchkey("setting_darkmode"),"setting_BSmode":fetchkey("setting_BSmode"),"setting_interval":fetchkey("setting_interval"),"setting_refresh":fetchkey("setting_refresh"),"setting_trash":fetchkey("setting_trash"),"highlitUsers": fetchlist("highlitUsers"),"hiddenUsers": fetchlist("hiddenUsers"),"hiddenSubs": fetchlist("hiddenSubs")};
 
-var compressed = LZString.compress(JSON.stringify(masterArray));
-
+alert(JSON.stringify(masterArray));
+var compressed = LZString.compressToEncodedURIComponent(JSON.stringify(masterArray));
+alert(compressed);
 }
 
 manageBackup() */
