@@ -202,7 +202,7 @@ a.button1:hover {
     color: #4B8EE7;
     text-decoration: none;
 }
-#closebtn {
+#cookieform1 div.closebtn {
     float: right;
     display: inline-block;
     cursor: pointer;
