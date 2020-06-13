@@ -7,7 +7,7 @@ barn.condense();
 function getCookiestate(){
  return new Promise(function(resolve, reject) {
 var cookie = barn.get("cookieconsent");	
-	if (cookie == "true" || "false"){
+	if ((cookie !== null)){
 		resolve(cookie);
 	} else{
 		setTimeout(function () {
@@ -112,18 +112,7 @@ window.addEventListener('keydown', function (e) {
     if (e.keyCode === 13) alert("Coded by StoneIncarnate!"); // enter
     if (e.keyCode === 27) refreshData(); // esc	
     if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) console.log(
-	`DEBUG VALUES:\n
-	Highlighted users: ${barn.smembers('highlitUsers') || "none"}\n
-	Hidden users: ${(barn.smembers('hiddenUsers') || "none")}\n
-	Hidden subs: ${(barn.smembers('hiddenSubs') || "none")}\n
-	Sort: ${barn.get('sort_sort')}\n
-	isAsc: ${barn.get('sort_isAsc')}\n
-	Elemindex: ${barn.get('sort_Elemindex')}\n
-	BSmode: ${barn.get('setting_BSmode')}\n
-	Darkmode: ${barn.get('setting_darkmode')}\n
-	Auto refresh: ${barn.get('setting_refresh')}\n
-	Refresh interval: ${barn.get('setting_interval')}\n
-	`);
+	`DEBUG VALUES:\nHighlighted users: ${barn.smembers('highlitUsers') || "none"}\nHidden users: ${(barn.smembers('hiddenUsers') || "none")}\nHidden subs: ${(barn.smembers('hiddenSubs') || "none")}\nSort: ${barn.get('sort_sort')}\nisAsc: ${barn.get('sort_isAsc')}\nElemindex: ${barn.get('sort_Elemindex')}\nBSmode: ${barn.get('setting_BSmode')}\nDarkmode: ${barn.get('setting_darkmode')}\nAuto refresh: ${barn.get('setting_refresh')}\nRefresh interval: ${barn.get('setting_interval')}\n`);
 });
 
 function getList(index) {
