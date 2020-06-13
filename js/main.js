@@ -7,7 +7,7 @@ barn.condense();
 function getCookiestate(){
  return new Promise(function(resolve, reject) {
 var cookie = barn.get("cookieconsent");	
-	if (cookie === true || false){
+	if (cookie == "true" || "false"){
 		resolve(cookie);
 	} else{
 		setTimeout(function () {
