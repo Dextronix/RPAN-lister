@@ -41,6 +41,33 @@ var refreshloop = setInterval(function(){ refreshData(); }, interval*1000);
 }
 
 $(document).ready(function () {
+	  (async () => {
+		   var url = "http://www.googletagmanager.com/gtag/js?id=UA-166723802-1";
+			window.location.href.match("https:")&&(url=url.replace("http","https"));
+               var consent = await getCookiestate();
+               (function(i, s, o, g, r, a, m) {
+                   i['GoogleAnalyticsObject'] = r;
+                   i[r] = i[r] || function() {
+                       (i[r].q = i[r].q || []).push(arguments)
+                   }, i[r].l = 1 * new Date();
+                   a = s.createElement(o),
+                       m = s.getElementsByTagName(o)[0];
+                   a.async = 1;
+                   a.src = g;
+                   m.parentNode.insertBefore(a, m)
+               })(window, document, 'script', url, 'ga');
+               ga('create', 'UA-166723802-1', 'auto');
+               ga('set', 'forceSSL', true);
+               if (consent === true) {
+                   ga('require', 'displayfeatures');
+                   ga('set', 'anonymizeIp', undefined);
+               } else {
+                   ga('set', 'displayFeaturesTask', null);
+                   ga('set', 'anonymizeIp', true);
+               }
+               ga('send', 'pageview');
+           })();
+	
     $.ajaxSetup({
         cache: false
     });
