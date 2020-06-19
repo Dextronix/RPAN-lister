@@ -7,9 +7,10 @@ function checkdarkmode(){
 $("html").toggleClass("darkmode", barn.get("setting_darkmode") || false);
 }
 
-$(".back").on("click", function() {
-	window.location.href=-1<window.location.href.indexOf("rpan.club")?"/":"/RPAN-lister";
-});
+function goBack() {
+window.location.href = "/RPAN-lister";
+}
+
 
 /* trash controls*/
 $(".trashcontrols a").on("click", function() {
@@ -79,53 +80,25 @@ activeStack.activeList = 1;
 	}
 });
 
-/* function manageBackup(){
-var masterArray = {};
-	
-fetchkey = function (name){
+/* 
+function manageBackup(){
+ fetchkey = function (name){
 return barn.get(name) || "";
 }
-fetchlist = function (name){
+ fetchlist = function (name){
 return _.compact(barn.smembers(name)) || [];
 }	
 	
-var generateStr = function(){
-masterArray = {"keys":{"cookieconsent": fetchkey("cookieconsent"),"sort_sort":fetchkey("sort_sort"),"sort_isAsc":fetchkey("sort_isAsc"),"sort_Elemindex":fetchkey("sort_Elemindex"),"setting_darkmode":fetchkey("setting_darkmode"),"setting_BSmode":fetchkey("setting_BSmode"),"setting_interval":fetchkey("setting_interval"),"setting_refresh":fetchkey("setting_refresh"),"setting_trash":fetchkey("setting_trash")},"lists":{"highlitUsers": fetchlist("highlitUsers"),"hiddenUsers": fetchlist("hiddenUsers"),"hiddenSubs": fetchlist("hiddenSubs")}};
-return LZString.compressToEncodedURIComponent(JSON.stringify(masterArray));
+var masterArray = {};
+
+masterArray = {"sort_sort":fetchkey("sort_sort"),"sort_isAsc":fetchkey("sort_isAsc"),"sort_Elemindex":fetchkey("sort_Elemindex"),"setting_darkmode":fetchkey("setting_darkmode"),"setting_BSmode":fetchkey("setting_BSmode"),"setting_interval":fetchkey("setting_interval"),"setting_refresh":fetchkey("setting_refresh"),"setting_trash":fetchkey("setting_trash"),"highlitUsers": fetchlist("highlitUsers"),"hiddenUsers": fetchlist("hiddenUsers"),"hiddenSubs": fetchlist("hiddenSubs")};
+
+alert(JSON.stringify(masterArray));
+var compressed = LZString.compressToEncodedURIComponent(JSON.stringify(masterArray));
+alert(compressed);
 }
 
-applyOptions = function(options){
-$.each(Object.keys(options.keys), function( index, value ) {
-  //console.log(value + " has value: " + options.keys[value]);
-});
-$.each(Object.keys(options.lists), function( index, value ) {
-  if (fetchkey[value] !== options.lists[value]){
-	  console.log(value + " has list: " + options.lists[value]);
-  }
-});
-}
-
-decompressStr = function(str){
-var decompressed = LZString.decompressFromEncodedURIComponent(str) || null;
-if (decompressed){
-var parsed = JSON.parse(decompressed) || null;	
-if (parsed){
-	applyOptions(parsed);
-}
-else{
-	alert("invalid options string");
-}
-}
-else{
-	alert("invalid options string");
-}
-	}
-	
-var compressed = generateStr();
-decompressStr(compressed);	
-	
-}
-manageBackup()  */
+manageBackup() */
 
 /* returns barn list of index*/
 function getList(index) {
