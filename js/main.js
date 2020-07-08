@@ -2,7 +2,6 @@ var streams = [];
 var barn = new Barn(localStorage);
 checkdarkmode();
 checkar();
-barn.condense();
 
 function getCookiestate(){
  return new Promise(function(resolve, reject) {
@@ -22,14 +21,34 @@ var cookie = barn.get("cookieconsent");
         $("#cookieform1").fadeOut(200);
 		barn.set("cookieconsent",false);
 		      resolve(false);
-
     });
 	}	
 	 });
 }
 
 function checkdarkmode(){
-$("html").toggleClass("darkmode", barn.get("setting_darkmode") || false);
+var colors;
+const colorNames = ["main-color", "border", "highlight", "color-a", "color-b", "accent", "accent-hover"];
+var customcolors = JSON.parse(barn.get("setting_colors")) || {customdark: false, customlight: false, dark: [], light: []};
+var darktheme = barn.get("setting_darkmode") || false;
+$("html").toggleClass("darkmode", darktheme);
+
+/* this checks if custom colors are set */
+    if (darktheme) {
+        if (customcolors.customdark == true) {
+			colors = [...customcolors.dark];
+        }
+    } else {
+        if (customcolors.customlight == true) {
+            colors = [...customcolors.light];
+        }
+    }
+	/* this applies custom color variables if defined */
+	if (colors){
+	$.each(colors, function(index, value) {
+        document.documentElement.style.setProperty('--' + colorNames[index], value);
+    });
+	}
 }
 
 function checkar(){
@@ -238,9 +257,9 @@ function listStreams(sort = 'none', isAsc = true) {
     $("#tableFLIP").empty();
 
     $.each(obj, function (index, item) {		
-        var bsmodestr = BSmode?`<td>${item.comments}</td>`:'';
+        var bsmodestr = BSmode?`<td><a class="txt">${item.comments}</a></td>`:'';
 
-		var markup = `<tr class="result${item.highlight?' marked"':""}"><td>${index+1}</td><td data_menu="stream"><a title="${item.title}"  onclick="openTab('${item.link}');">${item.title.TrimToLen(50)}</a></td><td data_value ="${item.subreddit}" data_menu="sub">r/${item.subreddit}</td><td data_value = "${item.username}" data_menu="${item.highlight?"user2":"user"}"><a onclick="openTab('https://www.reddit.com/user/${item.username}');">u/${item.username}</a></td><td>${item.contviews}</td><td>${item.upvotes}</td><td>${item.downvotes}</td>${bsmodestr}<td>${formatTime(item.timeon)}</td><td>${formatTime(item.timeleft)}</td></tr>`;
+		var markup = `<tr class="result${item.highlight?' marked"':""}"><td>${index+1}</td><td data_menu="stream"><a class="lnk" title="${item.title}" onclick="openTab('${item.link}');">${item.title.TrimToLen(50)}</a></td><td data_value ="${item.subreddit}" data_menu="sub"><a class="txt">r/${item.subreddit}</a></td><td data_value = "${item.username}" data_menu="${item.highlight?"user2":"user"}"><a class="lnk" onclick="openTab('https://www.reddit.com/user/${item.username}');">u/${item.username}</a></td><td><a class="txt">${item.contviews}</a></td><td><a class="txt">${item.upvotes}</a></td><td><a class="txt">${item.downvotes}</a></td> ${bsmodestr}<td><a class="txt">${formatTime(item.timeon)}</a></td><td><a class="txt">${formatTime(item.timeleft)}</a></td></tr>`;
 
         $("table tbody").append(markup);
     });

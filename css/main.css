@@ -2,6 +2,7 @@ html {
   width: 100%;
   margin: 0;
   --color-a: #000;
+  --color-b: #000;
   --main-color: #FFF;
   --bw-color: #FFF;
   --bw-color1: #000;
@@ -17,6 +18,7 @@ html.darkmode {
   width: 100%;
   margin: 0;
   --color-a: #FFF;
+  --color-b: #FFF;
   --bw-color: #000;
   --bw-color1: #FFF;
   --main-color: #181a1b;
@@ -73,6 +75,14 @@ table {
   border-collapse: collapse;
   width: 100%;
   white-space: nowrap;
+}
+
+a.txt{
+color: var(--color-a, #000);
+}
+
+a.lnk{
+color: var(--color-b, #000);  
 }
 
 td ,

@@ -5,14 +5,16 @@
 <link rel="icon" href="favicon.png">
 <meta charset="utf-8">
 <script src="libs/barn.min.js"></script>
-<!-- <script src="libs/lz-string.min.js"></script> -->
 <script src="libs/jquery.min.js"></script>
 <script src="libs/lodash.min.js"></script>
+<script src="libs/pickr.min.js"></script>
 <script src="js/settings.min.js" defer='defer'></script>
 <link rel="stylesheet" type="text/css" href="css/settings.css">
+<link href="css/nano.min.css" rel="stylesheet"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<div style="display: none" class="pickr-container1"></div>
 <div class="tabs">User Management</div>
 <div class="tabs">
   <button class="tabhead active">Highlit Users</button>
@@ -26,7 +28,8 @@
 <a action="move" style="text-align: right;">[Move to]</a>
 <a action="delete" style="text-align: right;">[Delete]</a>
 <a action="add" style="text-align: right;">[Add Item]</a>
-<div style="display: none;" class="boxcontainer"><br><input type="text" class="namebox"><input class="addbutton" type="button" value="Add"></div>
+<div style="display: none;" class="boxcontainer"><br>
+<input type="text" class="namebox"><input class="addbutton" type="button" value="Add"></div>
 </div>
 
 <div style="display: none;" class="trashcontrols">
@@ -40,12 +43,36 @@
 </div>
 <div class="tabs">Misc Settings</div>
 <div class=tabcontent>
-<input type="checkbox" class="setting" value="" data-action="darkmode"><label>Dark Theme</label><br>
 <input type="checkbox" class="setting" value="" data-action="autorefresh"><label>Auto Refresh</label><br>
 <div style="display: none;" class="container">
 Every:
 <div  class="range-slider"></div>
+</div> 
 </div>
+<div class="tabs">Color Settings</div>
+ <div class=tabcontent>
+  <select id="colormode">
+    <option value="light">Light Mode</option>
+    <option value="dark">Dark Mode</option>
+  </select>
+   <input class="colorbtn" type="button" value="Defaults"> 
+   <input class="colorbtn" type="button" state="off" value="Highlight: Off"><br>
+   <hr class="midbar">
+  <div class="colorparent">
+ <div class="pickercontainer">
+  <a>Background color - <div data-index="0" class="colorpreview"></div></a><br>
+  <a>Grid color - <div data-index="1" class="colorpreview"></div></a><br>  
+  <a>Highlight color - <div data-index="2" class="colorpreview"></div></a><br> 
+  <a>Text color - <div data-index="3" class="colorpreview"></div></a><br>  
+  <a>Link color - <div data-index="4" class="colorpreview"></div></a><br> 
+  <a>Tab color - <div data-index="5" class="colorpreview"></div></a><br>
+  <a>Tab (hover) color - <div data-index="6" class="colorpreview"></div></a><br>
+  </div> 
+ <div class="tablecontainer">
+<a>Live Preview:</a>
+<table><thead><tr><th><a class="txt">#</a></th><th><a class="txt">Stream</a></th></tr></thead><tbody><tr><td><a class="txt">1</a></td><td><a class="lnk">This is a sample stream</a></td></tr></tbody></table>
+</div>
+</div>  
 </div>
 <ul class='custom-menu2'></ul>
 </body>

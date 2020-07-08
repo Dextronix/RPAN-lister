@@ -1,4 +1,5 @@
 html {
+  overflow-y: scroll;
   --color-a: #000;
   --accent-active: #ccc;
   --accent-hover: #ddd;
@@ -7,6 +8,7 @@ html {
   --main-color: #FFF;
   --border-color: #CCC;
   --midbar: #3b3f42;
+  --invert: #000;
 }
 
 html.darkmode {
@@ -19,6 +21,7 @@ html.darkmode {
   --border-color: #5a5a5a;
   --midbar: #848484;
   --slider: #d7dcdf;
+  --invert: #FFF;
 }
 
 .container {
@@ -58,6 +61,9 @@ input[type=checkbox] {
 }
 
 input[type="text"], select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;	
   padding: 12px 20px;
   margin: 8px 0px;
   border-radius: 4px;
@@ -67,6 +73,10 @@ input[type="text"], select {
   border-color: var(--border-color);
   background-color: var(--accent);
   color: var(--color-a);
+}
+
+select:hover {
+ background-color: var(--accent-hover);	
 }
 
 input[type=text]:focus {
@@ -97,6 +107,7 @@ div.controlls {
 }
 
 body {
+  /* overflow-y: scroll; */
   font-family: Arial;
   overflow: hidden;
   background-color: var(--main-color);
@@ -268,4 +279,98 @@ div.trashcontrols a:hover {
 
 input::-moz-focus-inner, input::-moz-focus-outer {
   border: 0;
+}
+
+/* table preview */
+
+table {
+  background: var(--main-color_, #FFF);
+  border-collapse: collapse;
+  border: 1px solid var(--border_, #CCC);
+}
+
+th {
+  border: 1px solid var(--border_, #CCC);
+  background-color: var(--accent_, #DDD);
+  border-top: none;
+  font-weight: 400;
+}
+
+td {
+  border: 1px solid var(--border_, #CCC);
+}
+
+th:hover {
+  background-color: var(--accent-hover_, #CCC);
+}
+
+td ,
+th {
+  padding: 4px;
+  overflow: hidden;
+  text-align: left;
+  vertical-align: middle;
+}
+
+a.txt{
+color: var(--color-a_, #000);
+}
+
+a.lnk{
+color: var(--color-b_, #000);  
+}
+
+.highlight {
+	  background-color: var(--highlight_);
+}
+
+/* color customization menu */
+
+.colorbtn {
+    padding: 12px 20px;
+    margin: 8px 0px;
+    border-radius: 4px;
+    border: 1px solid var(--accent);
+    display: inline-block;
+    box-sizing: border-box;
+    border-color: var(--border-color);
+    background-color: var(--accent);
+    color: var(--color-a); 
+}
+
+.colorbtn:hover{
+    background-color: var(--accent-hover);
+    /* color: var(--color-a); */
+}
+
+.colorbtn:active{
+    background-color: var(--accent);
+    /* color: var(--color-a); */
+}
+
+a .colorpreview {
+border-style: solid;
+border-width: 1px;
+border-color: var(--invert, #000);
+background-color: #CCC;
+display: inline-block;
+height: 10px;
+width: 20px;
+padding: 2px;
+cursor: pointer;
+vertical-align: middle;
+}
+
+.pickercontainer {
+white-space: nowrap;
+text-align:left;
+vertical-align: middle;
+}
+
+.colorparent{
+    display: flex;
+}
+
+.tablecontainer {
+	margin: 1em;
 }
