@@ -168,7 +168,8 @@ function formatTime(time) {
 
 function refreshData() {
     streams = [];
-    parseStreams();
+    /* parseStreams(); something is broken temp fix */
+	location.reload();
 }
 
 function s_refreshData() {
