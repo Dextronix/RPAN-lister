@@ -1,63 +1,65 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <title>RPAN Lister</title>
-      <script src="libs/jquery.min.js"></script>
-      <script src="libs/lodash.min.js"></script>
-      <script src="libs/barn.min.js"></script>
-      <meta content="A small tool that lists all the current streams on Reddit Public Access Network" property="og:description">
-      <link rel="icon" href="favicon.png">
-      <link rel="stylesheet" type="text/css" href="css/main.css">
-      <script src="js/main.min.js" defer='defer'></script>
-	  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166723802-1"></script>
-      <script>
-        $(document).ready(function() { 
-           (async () => {
-			var consent = await getCookiestate();
-               if (consent === true) {
+<head>
+    <meta charset="utf-8">
+    <title>RPAN Lister</title>
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/lodash.min.js"></script>
+    <script src="libs/barn.min.js"></script>
+    <meta content="A small tool that lists all the current streams on Reddit Public Access Network" property="og:description">
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="js/main.min.js" defer='defer'></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166723802-1"></script>
+    <script>
+        $(document).ready(function() {
+            (async () => {
+                var consent = await getCookiestate();
+                if (consent === true) {
                     window.dataLayer = window.dataLayer || [];
-					function gtag(){dataLayer.push(arguments);}
-					gtag('js', new Date());
-					gtag('config', 'UA-166723802-1');
-               } else {
-					// do nothing
-               }
-           })();
-         });
-      </script>
-   </head>
-   <body>
-      <div class="page">
-         <div class="move_after">
-            <table id="resulttable">
-               <thead>
-                  <tr>
-                     <th><a>#</a></th>
-                     <th sortby="title"><a>Stream</a></th>
-                     <th sortby="subreddit"><a>Subreddit</a></th>
-                     <th sortby="username"><a>Username</a></th>
-                     <th sortby="contviews"><a>Viewers</a></th>
-                     <th sortby="upvotes"><a>Upvotes</a></th>
-                     <th sortby="downvotes"><a>Downvotes</a></th>
-                     <th sortby="timeon"><a>On for</a></th>
-                     <th sortby="timeleft"><a>Time Left</a></th>
-                  </tr>
-               </thead>
-               <tbody id="tableFLIP"></tbody>
-            </table>
-            <br>  
-         </div>
-         <div class="centered"><a onclick="refreshData()" class="button1">Refresh</a>
-            <a href="settings.html" class="button1">Settings</a>
-         </div>
-      </div>
-      <ul id="cust-menu"class='custom-menu'>
-      </ul>
-      <div id="cookieform1">
-         <div class="closebtn">x</div>
-         This site uses cookies. <a href="termsac.html#cookie" target="_blank">More info</a> <a class="allowbtn">Allow</a>
-      </div>
-   </body>
-</html>
 
+                    function gtag() {
+                        dataLayer.push(arguments);
+                    }
+                    gtag('js', new Date());
+                    gtag('config', 'UA-166723802-1');
+                } else {
+                    // do nothing
+                }
+            })();
+        });
+    </script>
+</head>
+<body>
+    <div class="page">
+        <div class="move_after">
+            <table id="resulttable">
+                <thead>
+                    <tr>
+                        <th><a>#</a></th>
+                        <th sortby="title"><a>Stream</a></th>
+                        <th sortby="subreddit"><a>Subreddit</a></th>
+                        <th sortby="username"><a>Username</a></th>
+                        <th sortby="contviews"><a>Viewers</a></th>
+                        <th sortby="upvotes"><a>Upvotes</a></th>
+                        <th sortby="downvotes"><a>Downvotes</a></th>
+                        <th sortby="timeon"><a>On for</a></th>
+                        <th sortby="timeleft"><a>Time Left</a></th>
+                    </tr>
+                </thead>
+                <tbody id="tableFLIP"></tbody>
+            </table>
+            <br>
+        </div>
+        <div class="centered"><a onclick="refreshData()" class="button1">Refresh</a>
+            <a href="settings.html" class="button1">Settings</a>
+        </div>
+    </div>
+    <ul id="cust-menu" class='custom-menu'>
+    </ul>
+    <div id="cookieform1">
+        <div class="closebtn">x</div>
+        This site uses cookies. <a href="termsac.html#cookie" target="_blank">More info</a> <a class="allowbtn">Allow</a>
+    </div>
+</body>
+</html>

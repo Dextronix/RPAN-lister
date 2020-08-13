@@ -338,7 +338,7 @@ function itemizeTrash() {
         TR.push({
             "name": activeStack.selectedtmp[i],
             "list": activeStack.activeList
-        }); // fix this
+        });
     }
 
     trash = getList(3);
@@ -426,9 +426,14 @@ function registerMenu() {
 }
 
 function registerSettings() {
-    autorefresh = barn.get("setting_refresh") || false;
+    // define vars
+    var autorefresh = barn.get("setting_refresh") || false;
+    var oldreddit = barn.get("setting_oldReddit") || false;
+    //set checkbox value
     $('[data-action=autorefresh]').prop("checked", autorefresh);
+    $('[data-action=oldreddit]').prop("checked", oldreddit);
 
+    //set vars on change
     $("input[class='setting']").on("change", function() {
         var action = $(this).attr("data-action");
         if (action == "autorefresh") {
@@ -440,6 +445,11 @@ function registerSettings() {
             }
         }
 
+        if (action == "oldreddit") {
+            oldreddit = !oldreddit;
+            barn.set("setting_oldReddit", oldreddit);
+        }
+
         $(".container").toggle(autorefresh);
     });
 
@@ -447,7 +457,7 @@ function registerSettings() {
     barn.condense();
 }
 
-/* this function handles the managing of misc settings and the interval slider */
+/* this function handles the managing of the interval slider */
 function registerSlider() {
     var interval = barn.get("setting_interval") || 10;
 
